@@ -11,6 +11,6 @@ namespace EntityFrameworkCore.Domain
         public int Id { get; set; }
         public string Name { get; set; }
         public int LeageId { get; set; }
-        public League Leage { get; set; }
+        public virtual League Leage { get; set; }
     }
 }
