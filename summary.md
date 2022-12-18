@@ -32,3 +32,7 @@
 - use local db
   - SQL Server Object Explorer
     - open from window tab
+
+# saveChanges
+- actually generate SQL and execute it.
+- context.tableName.Add is just in memory
