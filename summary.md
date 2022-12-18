@@ -36,3 +36,6 @@
 # saveChanges
 - actually generate SQL and execute it.
 - context.tableName.Add is just in memory
+
+# AddRangeAsync
+- can execute multiple insert SQL

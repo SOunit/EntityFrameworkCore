@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EntityFrameworkCore.Data
 {
-    public class FootballLeageDbContext : DbContext
+    public class FootballLeagueDbContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
