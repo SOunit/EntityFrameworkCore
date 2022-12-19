@@ -9,23 +9,43 @@ namespace EntityFrameworkCore.ConsoleApp
 
         static async Task Main(string[] args)
         {
-            // approach1, table add
-            //var league = new League { Name = "Red Stripe Premiere League" };
-            //await context.Leagues.AddAsync(league);
+            //Simple Insert Operation Methods
+            //await AddNewLeague();
+            //await AddNewTeamsWithLeague();
 
-            //await context.SaveChangesAsync();
-
-            //await AddTeamsWithLeague(league);
-            //await context.SaveChangesAsync();
-
-            //approach2, vague add
-            var league = new League { Name = "some league" };
-            var team = new Team { Name = "some team", Leage = league };
-            await context.AddAsync(team);
-            await context.SaveChangesAsync();
+            SimpleSelectQuery();
 
             Console.WriteLine("Press Any Key To End...");
             Console.ReadKey();
+        }
+
+        private static void SimpleSelectQuery()
+        {
+            //smartest most efficient way to get results
+            var leagues = context.Leagues.ToList();
+            foreach (var league in leagues)
+            {
+                Console.WriteLine($"{league.Id} - {league.Name}");
+            }
+
+            //inefficient way to get results. keep connection open until completed
+            //and might create lock on table
+            //foreach (var league in context.Leagues)
+            //{
+            //    Console.WriteLine($"{league.Id} - {league.Name}");
+            //}
+        }
+
+        private static async Task AddNewLeague()
+        {
+            //Adding a new league object
+            var league = new League { Name = "Red Stripe Premiere League" };
+            await context.Leagues.AddAsync(league);
+            await context.SaveChangesAsync();
+
+            //function to add new teams related to the new league object
+            await AddTeamsWithLeague(league);
+            await context.SaveChangesAsync();
         }
 
         private static async Task AddTeamsWithLeague(League league)
@@ -38,6 +58,14 @@ namespace EntityFrameworkCore.ConsoleApp
             };
 
             await context.AddRangeAsync(teams);
+        }
+
+        private static async Task AddNewTeamsWithLeague()
+        {
+            var league = new League { Name = "New League" };
+            var team = new Team { Name = "New Team", Leage = league };
+            await context.AddAsync(team);
+            await context.SaveChangesAsync();
         }
     }
 }
